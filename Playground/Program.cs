@@ -16,7 +16,7 @@ namespace Playground
     {
         static void Main(string[] args)
         {
-
+            int x;
             TMDbClient client = new TMDbClient("APIKey");
             Movie movie = client.GetMovieAsync(47964).Result;
 
