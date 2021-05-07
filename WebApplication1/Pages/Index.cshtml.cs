@@ -27,7 +27,7 @@ namespace dotMovies.Pages
          }
         
         public void OnGet() {
-
+            int x;
             Movies = MovieService.GetMovies();
         }
     }
