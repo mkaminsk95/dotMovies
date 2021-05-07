@@ -1,0 +1,48 @@
+﻿
+html {
+    font-size: 1rem;
+}
+
+@include media-breakpoint-up(sm) {
+    html {
+        font-size: 1.2rem;
+    }
+}
+
+@include media-breakpoint-up(md) {
+    html {
+        font-size: 1.4rem;
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    html {
+        font-size: 1.6rem;
+    }
+}
+
+img {
+
+    width: 10%;
+}
+
+.movieData {
+
+    margin-left: 15px;
+
+    display: inline-block;
+}
+
+.title {
+
+    margin-bottom: 5px;
+
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.year {
+    margin-bottom: 5px;
+    font-size: 12px;
+}
+
