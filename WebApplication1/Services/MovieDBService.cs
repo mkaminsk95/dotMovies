@@ -26,7 +26,7 @@ namespace dotMovies.Services {
             connection.Open();
 
             MySqlCommand command = connection.CreateCommand();
-            command.CommandText = "SELECT * FROM movies";
+            command.CommandText = "SELECT * FROM movies ORDER BY averageScore DESC LIMIT 100";
 
             MySqlDataReader moviesReader = command.ExecuteReader();
 
@@ -36,13 +36,15 @@ namespace dotMovies.Services {
 
                 movie.Id = moviesReader.GetInt32(0);
                 movie.Title = moviesReader.GetString(1);
-                movie.Poster = moviesReader.GetString(2);
-                movie.Year = moviesReader.GetInt16(3);
+                movie.Year = moviesReader.GetInt16(2);
+                movie.Poster = moviesReader.GetString(3);
                 movie.Director = moviesReader.GetString(4);
-                movie.Length = moviesReader.GetTimeSpan(5).ToString();
+                //movie.Length = moviesReader.GetTimeSpan(5).ToString();
 
                 movies.Add(movie);
             }
+
+            connection.Close();
 
             return movies;
         }

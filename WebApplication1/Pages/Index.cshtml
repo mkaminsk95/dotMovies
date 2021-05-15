@@ -9,17 +9,13 @@
 <div class="list-group">
     @foreach (var movie in Model.Movies) {
         <div class="list-group-item">
-            <img src="@movie.Poster" class="img-fluid" alt="Alternate Text" />
+            <img src="https://image.tmdb.org/t/p/w200/@movie.Poster" class="img-fluid" alt="Alternate Text" />
             <div class="movieData">
                 <a href="/movie/@movie.Id">@movie.Title</a>
                 <p class="year">@movie.Year</p>
             </div>
         </div>
     }
-
-
-
- 
 </div>
 
 
