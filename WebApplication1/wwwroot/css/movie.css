@@ -1,0 +1,17 @@
+﻿
+#poster {
+    margin-right: 20px;
+    vertical-align: top;
+}
+
+#movieData {
+    display: inline-block;
+}
+
+.movieVariable {
+    color: grey;
+}
+
+.movieValue {
+    font-weight: bold;
+}
