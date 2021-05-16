@@ -63,15 +63,15 @@ namespace dotMovies
                 //
                 //    return context.Response.WriteAsync(json);
                 //});
-                endpoints.MapGet("/movie/{id:int}", (context) =>
-                {
-                    var name = context.Request.RouteValues["name"];
+                //endpoints.MapGet("/movie/{id:int}", (context) =>
+                //{
+                //    var name = context.Request.RouteValues["name"];
 
-                    var endpoint = context.GetEndpoint();
+                //    var endpoint = context.GetEndpoint();
                     
-                    return context.Response.WriteAsync($"Hello {name}!");
+                //    return context.Response.WriteAsync($"Hello {name}!");
                     
-                });
+                //});
 
             });
         }
