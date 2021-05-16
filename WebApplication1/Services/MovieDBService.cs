@@ -55,10 +55,23 @@ namespace dotMovies.Services {
             return movie;
         }
 
+        public List<string> GetMovieGenres(int movieId) {
+
+            List<string> genreList = new List<string>();
+
+            MySqlDataReader moviesReader = GetMovieDataFromDatabase($"SELECT genre FROM dotmoviesdb.movie_genres WHERE movieId = {movieId}");
+
+            while (moviesReader.Read()) 
+                genreList.Add(moviesReader.GetString(0));
+            
+            _connection.Close();
+
+            return genreList;
+        }
+
         public List<Movie> GetMovies() {
 
             List<Movie> movies = new List<Movie>();
-
             MySqlDataReader moviesReader = GetMovieDataFromDatabase("SELECT * FROM movies ORDER BY averageScore DESC LIMIT 100");
 
             while(moviesReader.Read()) {
@@ -70,8 +83,7 @@ namespace dotMovies.Services {
                 movie.Year = moviesReader.GetInt16(2);
                 movie.Poster = moviesReader.GetString(3);
                 movie.AverageScore = moviesReader.GetFloat(9);
-                //movie.Length = moviesReader.GetTimeSpan(5).ToString();
-
+              
                 movies.Add(movie);
             }
 
