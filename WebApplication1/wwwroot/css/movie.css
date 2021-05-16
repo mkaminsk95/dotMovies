@@ -1,11 +1,26 @@
 ﻿
+#movieSection {
+    display: flex;
+    flex-wrap: nowrap;
+    font-size: initial;
+}
+
 #poster {
+    max-width: 200px;
+    height: 300px;
     margin-right: 20px;
     vertical-align: top;
 }
 
 #movieData {
-    display: inline-block;
+    
+}
+
+
+#star {
+
+    font-size: 2rem;
+    color: gold;
 }
 
 .genre {
@@ -19,4 +34,24 @@
 
 .movieValue {
     font-weight: bold;
+}
+
+@media only screen and (max-width: 1024px) and (max-height: 768px) {
+}
+
+@media only screen and (min-width : 768px) and (max-width : 1024px) {
+    #movieSection {
+        font-size: 14px;
+    }
+}
+
+@media only screen and (max-width : 768px) {
+    #movieSection {
+        flex-wrap: wrap;
+        font-size: 12px;
+    }
+
+    #poster {
+        margin-bottom: 20px;
+    }
 }

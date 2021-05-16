@@ -5,18 +5,24 @@
     dotMovies.Models.Movie Movie = Model.Movie;
 }
 
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="~/css/movie.css" asp-append-version="true" />
 
-<img src="https://image.tmdb.org/t/p/w200/@Movie.Poster" class="img-fluid" id="poster" alt="Alternate Text" />
+<div id="movieSection">
 
-<div id="movieData">
-    <h1>@Movie.Title</h1>
-    <p>@foreach (var genre in Model.GenreList) {<span class="genre"> @genre </span>}</p>
-    <p><span class="movieValue">@Movie.Year</span></p>
-    <p><span class="movieVariable">runtime:</span>    <span class="movieValue">@Movie.Runtime</span></p>
-    <p><span class="movieVariable">director:</span>   <span class="movieValue">@Movie.Director</span></p>
-    <p><span class="movieVariable">screenplay:</span> <span class="movieValue">@Movie.Screenplay</span></p>
-    <p><span class="movieVariable">budget:</span>     <span class="movieValue">@Model.Budget</span></p>
-    <p><span class="movieVariable">revenue:</span>    <span class="movieValue">@Model.Revenue</span></p>
+    <img src="https://image.tmdb.org/t/p/w200/@Movie.Poster" class="img-fluid" id="poster" alt="Alternate Text" />
+    
+    <div id="movieData">
+        <h1>
+            @Movie.Title <span class="material-icons" id="star">&#xf0ec;</span> @Movie.AverageScore
+        </h1>
+        <p>@foreach (var genre in Model.GenreList) {<span class="genre"> @genre </span>}</p>
+        <p><span class="movieValue">@Movie.Year</span></p>
+        <p><span class="movieVariable">runtime:</span>    <span class="movieValue">@Movie.Runtime</span></p>
+        <p><span class="movieVariable">director:</span>   <span class="movieValue">@Movie.Director</span></p>
+        <p><span class="movieVariable">screenplay:</span> <span class="movieValue">@Movie.Screenplay</span></p>
+        <p><span class="movieVariable">budget:</span>     <span class="movieValue">@Model.Budget</span></p>
+        <p><span class="movieVariable">revenue:</span>    <span class="movieValue">@Model.Revenue</span></p>
+    </div>
+    
 </div>
-
