@@ -21,16 +21,32 @@ html {
     }
 }
 
-img {
+h1 {
+    margin: 0 0 20px 20px;
+}
 
+.list-group-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.list-group-item img {
     width: 10%;
 }
 
 .movieData {
+    margin: auto 0 auto 15px;
+}
 
-    margin-left: 15px;
+.movieData a {
 
-    display: inline-block;
+    color: black;
+    text-decoration: none;
+}
+
+.movieData a:hover {
+    
+    color: darkgoldenrod;
 }
 
 .title {
@@ -38,11 +54,21 @@ img {
     margin-bottom: 5px;
 
     font-weight: bold;
-    font-size: 20px;
+    font-size: 1.25rem;
 }
 
 .year {
     margin-bottom: 5px;
-    font-size: 12px;
+    font-size: 1rem;
 }
 
+.movieScore {
+
+    margin: auto 40px auto auto;
+
+    font-size: 2rem;
+}
+
+#star {
+    color: gold;
+}

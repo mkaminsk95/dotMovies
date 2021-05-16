@@ -34,11 +34,11 @@ namespace dotMovies.Services {
 
                 Movie movie = new Movie();
 
-                movie.Id = moviesReader.GetInt32(0);
+                movie.MovieId = moviesReader.GetInt32(0);
                 movie.Title = moviesReader.GetString(1);
                 movie.Year = moviesReader.GetInt16(2);
                 movie.Poster = moviesReader.GetString(3);
-                movie.Director = moviesReader.GetString(4);
+                movie.AverageScore = moviesReader.GetFloat(9);
                 //movie.Length = moviesReader.GetTimeSpan(5).ToString();
 
                 movies.Add(movie);
