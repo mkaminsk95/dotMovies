@@ -68,7 +68,7 @@ namespace dotMovies.Services {
 
             return genreList;
         }
-
+    
         public List<Movie> GetMovies() {
 
             List<Movie> movies = new List<Movie>();
@@ -84,6 +84,29 @@ namespace dotMovies.Services {
                 movie.Poster = moviesReader.GetString(3);
                 movie.AverageScore = moviesReader.GetFloat(9);
               
+                movies.Add(movie);
+            }
+
+            _connection.Close();
+
+            return movies;
+        }
+
+        public List<Movie> GetMovies(string title) {
+
+            List<Movie> movies = new List<Movie>();
+            MySqlDataReader moviesReader = GetMovieDataFromDatabase($"SELECT * FROM movies WHERE title LIKE '%{title}%' ORDER BY averageScore DESC LIMIT 100");
+
+            while (moviesReader.Read()) {
+
+                Movie movie = new Movie();
+
+                movie.MovieId = moviesReader.GetInt32(0);
+                movie.Title = moviesReader.GetString(1);
+                movie.Year = moviesReader.GetInt16(2);
+                movie.Poster = moviesReader.GetString(3);
+                movie.AverageScore = moviesReader.GetFloat(9);
+
                 movies.Add(movie);
             }
 

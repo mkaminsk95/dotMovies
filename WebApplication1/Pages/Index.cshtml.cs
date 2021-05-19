@@ -9,6 +9,7 @@ using dotMovies.Models;
 using dotMovies.Services;
 using MySql.Data.MySqlClient;
 using System.Data;
+using System.ComponentModel.DataAnnotations;
 
 namespace dotMovies.Pages
 {
@@ -16,6 +17,12 @@ namespace dotMovies.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         public MovieDBService MovieService;
+
+        [FromQuery(Name = "title")]
+        public string Title { get; set; }
+        [FromQuery(Name = "year")]
+        public int Year { get; set; }
+
 
         public IEnumerable<Movie> Movies { get; private set; }
 
@@ -25,10 +32,18 @@ namespace dotMovies.Pages
             _logger = logger;
             MovieService = movieService;
          }
-        
+
+
+
         public void OnGet() {
-            
-            Movies = MovieService.GetMovies();
+
+            Console.WriteLine(Title);
+            if (Title == "")
+                Movies = MovieService.GetMovies();
+            else
+                Movies = MovieService.GetMovies(Title);
         }
+
+        
     }
 }
