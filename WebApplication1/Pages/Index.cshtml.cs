@@ -23,7 +23,8 @@ namespace dotMovies.Pages
         [FromQuery(Name = "year")]
         public int? Year { get; set; }
 
-
+        public IEnumerable<string> Genres = new string[]{ "Action", "Adventure", "Drama", "Science Fiction", "Comedy", "Romance", "Animation", "Family", "Fantasy",
+                                                            "Crime", "Thriller", "Horror", "History", "Mystery", "War", "Music", "Documentary", "Western", "TV Movie"};
         public IEnumerable<Movie> Movies { get; private set; }
 
 
@@ -37,15 +38,16 @@ namespace dotMovies.Pages
 
         public void OnGet() {
 
-            if (Title != null && Year != null)
-                Movies = MovieService.GetSpecificMovies(Title, Year.Value);
-            if (Title != null && Year == null)
-                Movies = MovieService.GetSpecificMovies(Title);
-            if (Title == null && Year != null)
-                Movies = MovieService.GetSpecificMovies(Year.Value);
-            if (Title == null && Year == null)
-                Movies = MovieService.GetTop100Movies();
+            //if (Title != null && Year != null)
+            //    Movies = MovieService.GetSpecificMovies(Title, Year.Value);
+            //if (Title != null && Year == null)
+            //    Movies = MovieService.GetSpecificMovies(Title);
+            //if (Title == null && Year != null)
+            //    Movies = MovieService.GetSpecificMovies(Year.Value);
+            //if (Title == null && Year == null)
+            //    Movies = MovieService.GetTop100Movies();
 
+            Movies = MovieService.GetSpecificMoviesByGenre("Horror");
         }
 
     }

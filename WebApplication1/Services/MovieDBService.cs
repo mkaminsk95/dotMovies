@@ -99,7 +99,17 @@ namespace dotMovies.Services {
             return movies;
         }
 
+        public List<Movie> GetSpecificMoviesByGenre(string genre) {
+            MySqlDataReader moviesReader = GetMovieDataFromDatabase("SELECT movies.* "
+                                                                    + "FROM movies INNER JOIN movie_genres "
+                                                                    + "ON movies.movieId = movie_genres.movieId "
+                                                                    +$"WHERE movie_genres.genre = '{genre}' "
+                                                                    + "ORDER BY averageScore DESC LIMIT 100;");
+            List<Movie> movies = MapDataReaderIntoMovieList(moviesReader);
 
+            _connection.Close();
+            return movies;
+        }
 
 
         private List<Movie> MapDataReaderIntoMovieList(MySqlDataReader moviesReader) {
