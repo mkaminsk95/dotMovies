@@ -19,9 +19,9 @@ namespace dotMovies.Pages
         public MovieDBService MovieService;
 
         [FromQuery(Name = "title")]
-        public string Title { get; set; }
+        public string? Title { get; set; }
         [FromQuery(Name = "year")]
-        public int Year { get; set; }
+        public int? Year { get; set; }
 
 
         public IEnumerable<Movie> Movies { get; private set; }
@@ -37,13 +37,16 @@ namespace dotMovies.Pages
 
         public void OnGet() {
 
-            Console.WriteLine(Title);
-            if (Title == "")
-                Movies = MovieService.GetMovies();
-            else
-                Movies = MovieService.GetMovies(Title);
+            if (Title != null && Year != null)
+                Movies = MovieService.GetSpecificMovies(Title, Year.Value);
+            if (Title != null && Year == null)
+                Movies = MovieService.GetSpecificMovies(Title);
+            if (Title == null && Year != null)
+                Movies = MovieService.GetSpecificMovies(Year.Value);
+            if (Title == null && Year == null)
+                Movies = MovieService.GetTop100Movies();
+
         }
 
-        
     }
 }

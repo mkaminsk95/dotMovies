@@ -51,7 +51,6 @@ namespace dotMovies.Services {
             movie.AverageScore = moviesReader.GetFloat(9);
 
             _connection.Close();
-
             return movie;
         }
 
@@ -65,37 +64,47 @@ namespace dotMovies.Services {
                 genreList.Add(moviesReader.GetString(0));
             
             _connection.Close();
-
             return genreList;
         }
     
-        public List<Movie> GetMovies() {
-
-            List<Movie> movies = new List<Movie>();
+        public List<Movie> GetTop100Movies() {
             MySqlDataReader moviesReader = GetMovieDataFromDatabase("SELECT * FROM movies ORDER BY averageScore DESC LIMIT 100");
-
-            while(moviesReader.Read()) {
-
-                Movie movie = new Movie();
-
-                movie.MovieId = moviesReader.GetInt32(0);
-                movie.Title = moviesReader.GetString(1);
-                movie.Year = moviesReader.GetInt16(2);
-                movie.Poster = moviesReader.GetString(3);
-                movie.AverageScore = moviesReader.GetFloat(9);
-              
-                movies.Add(movie);
-            }
+            List<Movie> movies = MapDataReaderIntoMovieList(moviesReader);
 
             _connection.Close();
-
             return movies;
         }
 
-        public List<Movie> GetMovies(string title) {
+        public List<Movie> GetSpecificMovies(string title) {
+            MySqlDataReader moviesReader = GetMovieDataFromDatabase($"SELECT * FROM movies WHERE title LIKE '%{title}%' ORDER BY averageScore DESC LIMIT 100;");
+            List<Movie> movies = MapDataReaderIntoMovieList(moviesReader);
+
+            _connection.Close();
+            return movies;
+        }
+
+        public List<Movie> GetSpecificMovies(int year) {
+            MySqlDataReader moviesReader = GetMovieDataFromDatabase($"SELECT * FROM movies WHERE year = {year} ORDER BY averageScore DESC LIMIT 100;");
+            List<Movie> movies = MapDataReaderIntoMovieList(moviesReader);
+
+            _connection.Close();
+            return movies;
+        }
+
+        public List<Movie> GetSpecificMovies(string title, int year) {
+            MySqlDataReader moviesReader = GetMovieDataFromDatabase($"SELECT * FROM movies WHERE title LIKE '%{title}%' AND year = {year} ORDER BY averageScore DESC LIMIT 100;");
+            List<Movie> movies = MapDataReaderIntoMovieList(moviesReader);
+
+            _connection.Close();
+            return movies;
+        }
+
+
+
+
+        private List<Movie> MapDataReaderIntoMovieList(MySqlDataReader moviesReader) {
 
             List<Movie> movies = new List<Movie>();
-            MySqlDataReader moviesReader = GetMovieDataFromDatabase($"SELECT * FROM movies WHERE title LIKE '%{title}%' ORDER BY averageScore DESC LIMIT 100");
 
             while (moviesReader.Read()) {
 
@@ -109,8 +118,6 @@ namespace dotMovies.Services {
 
                 movies.Add(movie);
             }
-
-            _connection.Close();
 
             return movies;
         }
