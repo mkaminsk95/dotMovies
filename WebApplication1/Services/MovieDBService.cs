@@ -75,42 +75,40 @@ namespace dotMovies.Services {
             return movies;
         }
 
-        public List<Movie> GetSpecificMovies(string title) {
-            MySqlDataReader moviesReader = GetMovieDataFromDatabase($"SELECT * FROM movies WHERE title LIKE '%{title}%' ORDER BY averageScore DESC LIMIT 100;");
+        public List<Movie> GetSpecificMovies(string title, int? year, string genre) {
+
+            string queryString = "SELECT movies.* FROM movies ";
+
+            if (genre != null)
+                queryString = queryString + $"INNER JOIN movie_genres ON movies.movieId = movie_genres.movieId ";
+
+            queryString += "WHERE ";
+
+            if (genre != null)
+                queryString += $"genre = '{genre}' ";
+            
+            if (title != null) {
+                if (genre != null)
+                    queryString += "AND ";
+                queryString += $"title LIKE '%{title}%' ";
+            }
+            
+            if (year != null) {
+                if (genre != null || title != null)
+                    queryString += " AND ";
+                queryString += $"year = {year} ";
+            }
+
+            queryString += "ORDER BY averageScore DESC LIMIT 100";
+
+            MySqlDataReader moviesReader = GetMovieDataFromDatabase(queryString);
+
+
             List<Movie> movies = MapDataReaderIntoMovieList(moviesReader);
 
             _connection.Close();
             return movies;
         }
-
-        public List<Movie> GetSpecificMovies(int year) {
-            MySqlDataReader moviesReader = GetMovieDataFromDatabase($"SELECT * FROM movies WHERE year = {year} ORDER BY averageScore DESC LIMIT 100;");
-            List<Movie> movies = MapDataReaderIntoMovieList(moviesReader);
-
-            _connection.Close();
-            return movies;
-        }
-
-        public List<Movie> GetSpecificMovies(string title, int year) {
-            MySqlDataReader moviesReader = GetMovieDataFromDatabase($"SELECT * FROM movies WHERE title LIKE '%{title}%' AND year = {year} ORDER BY averageScore DESC LIMIT 100;");
-            List<Movie> movies = MapDataReaderIntoMovieList(moviesReader);
-
-            _connection.Close();
-            return movies;
-        }
-
-        public List<Movie> GetSpecificMoviesByGenre(string genre) {
-            MySqlDataReader moviesReader = GetMovieDataFromDatabase("SELECT movies.* "
-                                                                    + "FROM movies INNER JOIN movie_genres "
-                                                                    + "ON movies.movieId = movie_genres.movieId "
-                                                                    +$"WHERE movie_genres.genre = '{genre}' "
-                                                                    + "ORDER BY averageScore DESC LIMIT 100;");
-            List<Movie> movies = MapDataReaderIntoMovieList(moviesReader);
-
-            _connection.Close();
-            return movies;
-        }
-
 
         private List<Movie> MapDataReaderIntoMovieList(MySqlDataReader moviesReader) {
 

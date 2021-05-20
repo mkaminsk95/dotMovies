@@ -13,16 +13,18 @@ using System.ComponentModel.DataAnnotations;
 
 namespace dotMovies.Pages
 {
+    [BindProperties(SupportsGet = true)]
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
         public MovieDBService MovieService;
 
-        [FromQuery(Name = "title")]
-        public string? Title { get; set; }
-        [FromQuery(Name = "year")]
-        public int? Year { get; set; }
-
+        
+        
+        public string QueryTitle { get; set; }
+        public int? QueryYear { get; set; }
+        public string QueryGenre { get; set; }
+        
         public IEnumerable<string> Genres = new string[]{ "Action", "Adventure", "Drama", "Science Fiction", "Comedy", "Romance", "Animation", "Family", "Fantasy",
                                                             "Crime", "Thriller", "Horror", "History", "Mystery", "War", "Music", "Documentary", "Western", "TV Movie"};
         public IEnumerable<Movie> Movies { get; private set; }
@@ -38,16 +40,10 @@ namespace dotMovies.Pages
 
         public void OnGet() {
 
-            //if (Title != null && Year != null)
-            //    Movies = MovieService.GetSpecificMovies(Title, Year.Value);
-            //if (Title != null && Year == null)
-            //    Movies = MovieService.GetSpecificMovies(Title);
-            //if (Title == null && Year != null)
-            //    Movies = MovieService.GetSpecificMovies(Year.Value);
-            //if (Title == null && Year == null)
-            //    Movies = MovieService.GetTop100Movies();
-
-            Movies = MovieService.GetSpecificMoviesByGenre("Horror");
+            if (QueryTitle != null || QueryYear != null || QueryGenre != null)
+                Movies = MovieService.GetSpecificMovies(QueryTitle, QueryYear, QueryGenre);
+            else 
+                Movies = MovieService.GetTop100Movies();
         }
 
     }
