@@ -39,7 +39,7 @@ namespace dotMovies.Services {
 
             moviesReader.Read();
 
-            movie.MovieId = moviesReader.GetInt32(0);
+            movie.ID = moviesReader.GetInt32(0);
             movie.Title = moviesReader.GetString(1);
             movie.Year = moviesReader.GetInt16(2);
             movie.Poster = moviesReader.GetString(3);
@@ -58,7 +58,7 @@ namespace dotMovies.Services {
 
             List<string> genreList = new List<string>();
 
-            MySqlDataReader moviesReader = GetMovieDataFromDatabase($"SELECT genre FROM dotmoviesdb.movie_genres WHERE movieId = {movieId}");
+            MySqlDataReader moviesReader = GetMovieDataFromDatabase($"SELECT genre FROM dotmoviesdb.movie_genre WHERE movieID = {movieId}");
 
             while (moviesReader.Read()) 
                 genreList.Add(moviesReader.GetString(0));
@@ -68,7 +68,7 @@ namespace dotMovies.Services {
         }
     
         public List<Movie> GetTop100Movies() {
-            MySqlDataReader moviesReader = GetMovieDataFromDatabase("SELECT * FROM movies ORDER BY averageScore DESC LIMIT 100");
+            MySqlDataReader moviesReader = GetMovieDataFromDatabase("SELECT * FROM movie ORDER BY averageScore DESC LIMIT 100");
             List<Movie> movies = MapDataReaderIntoMovieList(moviesReader);
 
             _connection.Close();
@@ -77,10 +77,10 @@ namespace dotMovies.Services {
 
         public List<Movie> GetSpecificMovies(string title, int? year, string genre) {
 
-            string queryString = "SELECT movies.* FROM movies ";
+            string queryString = "SELECT movie.* FROM movie ";
 
             if (genre != null)
-                queryString = queryString + $"INNER JOIN movie_genres ON movies.movieId = movie_genres.movieId ";
+                queryString = queryString + $"INNER JOIN movie_genre ON movie.ID = movie_genre.movieID ";
 
             queryString += "WHERE ";
 
@@ -118,7 +118,7 @@ namespace dotMovies.Services {
 
                 Movie movie = new Movie();
 
-                movie.MovieId = moviesReader.GetInt32(0);
+                movie.ID = moviesReader.GetInt32(0);
                 movie.Title = moviesReader.GetString(1);
                 movie.Year = moviesReader.GetInt16(2);
                 movie.Poster = moviesReader.GetString(3);
