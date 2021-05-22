@@ -35,7 +35,7 @@ namespace dotMovies.Services {
 
             Movie movie = new Movie();
 
-            MySqlDataReader moviesReader = GetMovieDataFromDatabase($"SELECT * FROM movies WHERE movieId = {movieId}");
+            MySqlDataReader moviesReader = GetMovieDataFromDatabase($"SELECT * FROM movie WHERE ID = {movieId}");
 
             moviesReader.Read();
 

@@ -12,6 +12,8 @@ using dotMovies.Services;
 using System.Text.Json;
 using dotMovies.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using dotMovies.Data;
 
 namespace dotMovies
 {
@@ -30,6 +32,11 @@ namespace dotMovies
             services.AddRazorPages();
             services.AddHealthChecks();
             services.AddTransient<MovieDBService>();
+
+            services.AddDbContext<MoviesDBContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("MoviesDBContext")));
+            
+            services.AddDatabaseDeveloperPageExceptionFilter();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
