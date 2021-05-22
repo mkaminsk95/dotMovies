@@ -8,7 +8,7 @@ namespace dotMovies.Models
 {
     public class Movie
     {
-        public int MovieId { get; set; }
+        public int ID { get; set; }
         public string Title { get; set; }
         public int Year { get; set; }
         public string Poster { get; set; }
@@ -18,9 +18,9 @@ namespace dotMovies.Models
         public int Budget { get; set; }
         public int Revenue { get; set; }
         public float AverageScore { get; set; }
-        public string[] Genre { get; set; }
 
-        public override string ToString() => JsonSerializer.Serialize<Movie>(this);
-        
+        public ICollection<MovieGenre> Genres { get; set; }
+        public ICollection<MovieRate> MovieRates { get; set; }
+
     }
 }
