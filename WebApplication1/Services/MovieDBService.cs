@@ -134,10 +134,17 @@ namespace dotMovies.Services {
             return movies;
         }
 
-        public void AddNewUser(User newUser) {
+        public bool AddNewUser(User newUser) {
 
-            _context.Users.Add(newUser);
-            _context.SaveChanges();
+            if (_context.Users.Any(user => user.Login == newUser.Login)) {
+                return false;
+            } else {
+                _context.Users.Add(newUser);
+                _context.SaveChanges();
+
+                return true;
+            }
+
         }
 
         //public async Task<IActionResult> OnPostAsync() {

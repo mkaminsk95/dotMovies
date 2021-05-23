@@ -38,26 +38,27 @@ namespace dotMovies.Pages
 
         public IActionResult OnPost() {
             
-            TempData["Success"] = true;
-            
-            return Page();
             if (ModelState.IsValid) {
 
                 User newUser = new User();
                 newUser.Login = InputLogin;
                 newUser.Password = InputPassword;
 
-                MovieService.AddNewUser(newUser);
-
-                return RedirectToPage("./Index");
+                bool ifOperationSucceed = MovieService.AddNewUser(newUser);
+                
+                if (ifOperationSucceed) 
+                    TempData["RegistrationState"] = "RegistrationSuccess";
+                else 
+                    TempData["RegistrationState"] = "LoginExists";
+                
             }
-            TempData["Success"] = true;
+
             return Page();
         }
 
         public void OnGet()
         {
-            TempData["Success"] = false;
+
         }
     }
 }

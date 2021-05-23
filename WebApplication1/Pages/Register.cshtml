@@ -3,12 +3,11 @@
 @{
 }
 
-<form method="post">
-    @if((bool)TempData["Success"] == true) {
-    <div class="alert alert-success" role="alert">
-        Registered correctly!
-    </div>
-    }
+<link href="~/css/register.css" rel="stylesheet" />
+
+<form class="w-50 p-3 mx-auto border rounded d-flex flex-column" method="post">
+
+    <h2>Register</h2>
 
     <div class="form-group">
         <label asp-for="@Model.InputLogin">Login</label>
@@ -22,5 +21,16 @@
         <span asp-validation-for="@Model.InputPassword" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    @if (TempData["RegistrationState"] == "RegistrationSuccess") {
+        <div class="alert alert-success" role="alert">
+            Registered correctly!
+        </div>
+    } else if (TempData["RegistrationState"] == "LoginExists") {
+        <div class="alert alert-danger" role="alert">
+            Login already exists
+        </div>
+    }
+
+    <button type="submit" class="btn btn-primary ml-auto">Submit</button>
+
 </form>
