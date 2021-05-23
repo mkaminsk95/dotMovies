@@ -19,11 +19,11 @@ namespace dotMovies.Pages.Users
             _context = context;
         }
 
-        public IList<User> User { get;set; }
+        public IList<User> Users { get;set; }
 
         public async Task OnGetAsync()
         {
-            User = await _context.Users.ToListAsync();
+            Users = await _context.Users.ToListAsync();
         }
     }
 }

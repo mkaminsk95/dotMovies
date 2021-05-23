@@ -1,4 +1,5 @@
 ﻿using dotMovies.Models;
+using dotMovies.Data;
 using Microsoft.AspNetCore.Hosting;
 using MySql.Data.MySqlClient;
 using System;
@@ -6,15 +7,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace dotMovies.Services {
     public class MovieDBService {
 
         private string _connectionString = "server=localhost;user id=root;database=dotmoviesdb;allowuservariables=True;password=movieDBpassword";
-        private MySqlConnection _connection; 
+        private MySqlConnection _connection;
+        private MoviesDBContext _context;
 
-        public MovieDBService(IWebHostEnvironment webHostEnvironment) {
+        public MovieDBService(IWebHostEnvironment webHostEnvironment, MoviesDBContext context) {
             WebHostEnvironment = webHostEnvironment;
             _connection = new MySqlConnection(_connectionString);
+            _context = context;
         }
 
         public IWebHostEnvironment WebHostEnvironment { get; }
@@ -129,5 +133,20 @@ namespace dotMovies.Services {
 
             return movies;
         }
+
+        private void AddNewUser(User newUser) {
+
+            _context.Users.Add(newUser);
+            _context.SaveChangesAsync();
+        }
+
+        //public async Task<IActionResult> OnPostAsync() {
+            
+
+        //    _context.Users.Add(User);
+        //    await _context.SaveChangesAsync();
+
+        //    return RedirectToPage("./Index");
+        //}
     }
 }

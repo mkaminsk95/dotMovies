@@ -20,10 +20,10 @@ namespace dotMovies.Data
         public DbSet<MovieGenre> MovieGenres { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
-            modelBuilder.Entity<User>().ToTable("UsersManager");
-            modelBuilder.Entity<Movie>().ToTable("Movie");
-            modelBuilder.Entity<MovieRate>().ToTable("MovieRate");
-            modelBuilder.Entity<MovieGenre>().ToTable("MovieGenre");
+            modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<Movie>().ToTable("Movies");
+            modelBuilder.Entity<MovieRate>().ToTable("MovieRates");
+            modelBuilder.Entity<MovieGenre>().ToTable("MovieGenres");
 
             modelBuilder.Entity<MovieGenre>().HasKey(nameof(MovieGenre.Genre), nameof(MovieGenre.MovieID));
         }
