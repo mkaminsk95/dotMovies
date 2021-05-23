@@ -4,7 +4,11 @@
 }
 
 <form method="post">
-    <div asp-validation-summary="All" class="text-danger"></div>
+    @if((bool)TempData["Success"] == true) {
+    <div class="alert alert-success" role="alert">
+        Registered correctly!
+    </div>
+    }
 
     <div class="form-group">
         <label asp-for="@Model.InputLogin">Login</label>

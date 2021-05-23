@@ -37,7 +37,10 @@ namespace dotMovies.Pages
 
 
         public IActionResult OnPost() {
-
+            
+            TempData["Success"] = true;
+            
+            return Page();
             if (ModelState.IsValid) {
 
                 User newUser = new User();
@@ -48,13 +51,13 @@ namespace dotMovies.Pages
 
                 return RedirectToPage("./Index");
             }
-
+            TempData["Success"] = true;
             return Page();
         }
 
         public void OnGet()
         {
-            
+            TempData["Success"] = false;
         }
     }
 }
