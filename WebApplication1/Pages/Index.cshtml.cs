@@ -17,7 +17,7 @@ namespace dotMovies.Pages
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
-        public MovieDBService MovieService;
+        public MoviesService MovieService;
 
         
         
@@ -30,7 +30,7 @@ namespace dotMovies.Pages
         public IEnumerable<Movie> Movies { get; private set; }
 
 
-        public IndexModel(ILogger<IndexModel> logger, MovieDBService movieService) {
+        public IndexModel(ILogger<IndexModel> logger, MoviesService movieService) {
 
             _logger = logger;
             MovieService = movieService;

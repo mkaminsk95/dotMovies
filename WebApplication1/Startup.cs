@@ -31,7 +31,8 @@ namespace dotMovies
         {
             services.AddRazorPages();
             services.AddHealthChecks();
-            services.AddTransient<MovieDBService>();
+            services.AddTransient<MoviesService>();
+            services.AddTransient<UsersService>();
 
             services.AddDbContext<MoviesDBContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("MoviesDBContext")));

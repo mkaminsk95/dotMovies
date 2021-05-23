@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 
 namespace dotMovies.Services {
-    public class MovieDBService {
+    public class MoviesService {
 
         private string _connectionString = "server=localhost;user id=root;database=dotmoviesdb;allowuservariables=True;password=movieDBpassword";
         private MySqlConnection _connection;
         private MoviesDBContext _context;
 
-        public MovieDBService(IWebHostEnvironment webHostEnvironment, MoviesDBContext context) {
+        public MoviesService(IWebHostEnvironment webHostEnvironment, MoviesDBContext context) {
             WebHostEnvironment = webHostEnvironment;
             _connection = new MySqlConnection(_connectionString);
             _context = context;
@@ -134,26 +134,6 @@ namespace dotMovies.Services {
             return movies;
         }
 
-        public bool AddNewUser(User newUser) {
-
-            if (_context.Users.Any(user => user.Login == newUser.Login)) {
-                return false;
-            } else {
-                _context.Users.Add(newUser);
-                _context.SaveChanges();
-
-                return true;
-            }
-
-        }
-
-        //public async Task<IActionResult> OnPostAsync() {
-            
-
-        //    _context.Users.Add(User);
-        //    await _context.SaveChangesAsync();
-
-        //    return RedirectToPage("./Index");
-        //}
+        
     }
 }

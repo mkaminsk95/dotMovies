@@ -11,13 +11,13 @@ using System.Globalization;
 namespace dotMovies.Pages
 {
     public class MovieModel : PageModel {
-        public MovieDBService MovieService;
+        public MoviesService MovieService;
 
         public Movie Movie { get; private set; }
         public List<string> GenreList;
         public string Budget, Revenue;
 
-        public MovieModel(MovieDBService movieService) {
+        public MovieModel(MoviesService movieService) {
  
             MovieService = movieService;
         }

@@ -13,7 +13,7 @@ namespace dotMovies.Pages
     [BindProperties]
     public class RegisterModel : PageModel
     {
-        public MovieDBService MovieService;
+        public UsersService UsersService;
 
         [Required]
         [DataType(DataType.Text)]
@@ -29,9 +29,9 @@ namespace dotMovies.Pages
         public string InputPassword { get; set; }
 
 
-        public RegisterModel(MovieDBService movieService) {
+        public RegisterModel(UsersService usersService) {
 
-            MovieService = movieService;
+            UsersService = usersService;
         }
 
 
@@ -44,7 +44,7 @@ namespace dotMovies.Pages
                 newUser.Login = InputLogin;
                 newUser.Password = InputPassword;
 
-                bool ifOperationSucceed = MovieService.AddNewUser(newUser);
+                bool ifOperationSucceed = UsersService.AddNewUser(newUser);
                 
                 if (ifOperationSucceed) 
                     TempData["RegistrationState"] = "RegistrationSuccess";
