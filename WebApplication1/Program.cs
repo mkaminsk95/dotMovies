@@ -26,7 +26,9 @@ namespace dotMovies
                 var services = scope.ServiceProvider;
                 try {
                     var context = services.GetRequiredService<MoviesDBContext>();
-                    context.Database.EnsureCreated();
+                    if (context.Database.EnsureCreated()) {
+                        Console.WriteLine("New Database Created");
+                    }
                     // DbInitializer.Initialize(context);
                 } catch (Exception ex) {
                     var logger = services.GetRequiredService<ILogger<Program>>();

@@ -37,7 +37,6 @@ namespace dotMovies.Pages
          }
 
 
-
         public void OnGet() {
 
             if (QueryTitle != null || QueryYear != null || QueryGenre != null)

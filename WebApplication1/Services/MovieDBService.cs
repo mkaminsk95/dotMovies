@@ -50,8 +50,8 @@ namespace dotMovies.Services {
             movie.Director = moviesReader.GetString(4);
             movie.Screenplay = moviesReader.GetString(5);
             movie.Runtime = moviesReader.GetTimeSpan(6);
-            movie.Budget = moviesReader.GetInt32(7);
-            movie.Revenue = moviesReader.GetInt32(8);
+            movie.Budget = (uint)moviesReader.GetInt32(7);
+            movie.Revenue = (uint)moviesReader.GetInt32(8);
             movie.AverageScore = moviesReader.GetFloat(9);
 
             _connection.Close();
@@ -134,10 +134,10 @@ namespace dotMovies.Services {
             return movies;
         }
 
-        private void AddNewUser(User newUser) {
+        public void AddNewUser(User newUser) {
 
             _context.Users.Add(newUser);
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         //public async Task<IActionResult> OnPostAsync() {

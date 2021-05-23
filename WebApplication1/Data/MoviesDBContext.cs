@@ -13,7 +13,7 @@ namespace dotMovies.Data
             : base(options)
         {
         }
-
+        
         public DbSet<User> Users { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<MovieRate> MovieRates { get; set; }
