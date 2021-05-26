@@ -32,6 +32,7 @@ namespace dotMovies.Pages
 
         public IndexModel(ILogger<IndexModel> logger, MoviesService movieService) {
 
+
             _logger = logger;
             MovieService = movieService;
          }

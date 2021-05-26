@@ -10,6 +10,11 @@ namespace dotMovies.Services {
 
         private MoviesDBContext _context;
 
+        public UsersService(MoviesDBContext moviesDBContext) {
+            _context = moviesDBContext;
+
+        }
+
         public bool CheckCredentials(User credentials) {
 
             if (_context.Users.Any(user => (user.Login == credentials.Login

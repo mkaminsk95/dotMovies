@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,10 +24,7 @@ namespace dotMovies.Pages
 
         public void OnGet(int id)
         {
-            //int id = int.Parse((string)RouteData.Values["id"]);
-            
-            Movie = MovieService.GetMovie(id);
-            GenreList = MovieService.GetMovieGenres(id);
+            Movie = MovieService.GetMovieWithGenres(id);
 
             if (Movie.Budget != 0)
                 Budget = Movie.Budget.ToString("C", CultureInfo.CreateSpecificCulture("en-US"));

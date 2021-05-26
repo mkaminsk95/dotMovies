@@ -14,6 +14,7 @@ using dotMovies.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using dotMovies.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace dotMovies
 {
@@ -36,8 +37,10 @@ namespace dotMovies
 
             services.AddDbContext<MoviesDBContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("MoviesDBContext")));
-            
             services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                    .AddCookie();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,32 +58,18 @@ namespace dotMovies
             }
 
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
-                //endpoints.MapGet("/movies", (context) => 
-                //{
-                //    var movies = app.ApplicationServices.GetService<JsonFileMovieService>().GetProducts();
-                //    var json = JsonSerializer.Serialize<IEnumerable<Movie>>(movies);
-                //
-                //    return context.Response.WriteAsync(json);
-                //});
-                //endpoints.MapGet("/movie/{id:int}", (context) =>
-                //{
-                //    var name = context.Request.RouteValues["name"];
-
-                //    var endpoint = context.GetEndpoint();
-                    
-                //    return context.Response.WriteAsync($"Hello {name}!");
-                    
-                //});
-
+              
             });
         }
     }

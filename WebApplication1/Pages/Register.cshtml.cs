@@ -14,6 +14,7 @@ namespace dotMovies.Pages
     public class RegisterModel : PageModel
     {
         public UsersService UsersService;
+        public MoviesService MoviesService;
 
         [Required]
         [DataType(DataType.Text)]
@@ -29,8 +30,8 @@ namespace dotMovies.Pages
         public string InputPassword { get; set; }
 
 
-        public RegisterModel(UsersService usersService) {
-
+        public RegisterModel(UsersService usersService, MoviesService moviesService) {
+            MoviesService = moviesService;
             UsersService = usersService;
         }
 
@@ -58,7 +59,6 @@ namespace dotMovies.Pages
 
         public void OnGet()
         {
-
         }
     }
 }

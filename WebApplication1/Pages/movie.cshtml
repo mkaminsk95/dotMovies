@@ -16,7 +16,7 @@
         <h1>
             @Movie.Title <span class="material-icons" id="star">&#xf0ec;</span> @Movie.AverageScore
         </h1>
-        <p>@foreach (var genre in Model.GenreList) {<span class="genre"> @genre </span>}</p>
+        <p>@foreach (var genre in Movie.Genres) {<span class="genre"> @genre.Genre </span>}</p>
         <p><span class="movieValue">@Movie.Year</span></p>
         <p><span class="movieVariable">runtime:</span>    <span class="movieValue">@Movie.Runtime</span></p>
         <p><span class="movieVariable">director:</span>   <span class="movieValue">@Movie.Director</span></p>
