@@ -12,8 +12,6 @@ using Microsoft.EntityFrameworkCore;
 namespace dotMovies.Services {
     public class MoviesService {
 
-        private string _connectionString = "server=localhost;user id=root;database=dotmoviesdb;allowuservariables=True;password=movieDBpassword";
-        private MySqlConnection _connection;
         private MoviesDBContext _context;
 
         public MoviesService(IWebHostEnvironment webHostEnvironment, 
@@ -56,7 +54,6 @@ namespace dotMovies.Services {
                 query = query.Where(m => m.Genres.Where(g => g.Genre == genre).Any());
 
             var movies = query.OrderByDescending(m => m.AverageScore).Take(100).ToList();
-            
             
             return movies;
         }
