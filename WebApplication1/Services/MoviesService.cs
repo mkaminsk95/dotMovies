@@ -17,7 +17,6 @@ namespace dotMovies.Services {
         public MoviesService(IWebHostEnvironment webHostEnvironment, 
                             MoviesDBContext moviesDBContext) {
             WebHostEnvironment = webHostEnvironment;
-            _connection = new MySqlConnection(_connectionString);
             _context = moviesDBContext;
         }
 

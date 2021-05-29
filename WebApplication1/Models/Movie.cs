@@ -11,6 +11,7 @@ namespace dotMovies.Models
     {
         public int ID { get; set; }
         [Required]
+        [DataType(DataType.Text)]
         public string Title { get; set; }
         [Required]
         public int Year { get; set; }

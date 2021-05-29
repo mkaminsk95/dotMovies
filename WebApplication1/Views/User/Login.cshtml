@@ -1,0 +1,32 @@
+﻿@using dotMovies.Models;
+
+@{
+    ViewData["Title"] = "Login";
+    User user = new User();
+}
+
+<form class="w-50 p-3 mx-auto border rounded d-flex flex-column" method="post">
+
+    <h2>Login</h2>
+
+    <div class="form-group">
+        <label asp-for="@user.Login">Login</label>
+        <input asp-for="@user.Login" class="form-control" placeholder="Enter login">
+        <span asp-validation-for="@user.Login" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@user.Password">Password</label>
+        <input asp-for="@user.Password" class="form-control" placeholder="Enter password">
+        <span asp-validation-for="@user.Password" class="text-danger"></span>
+    </div>
+
+    @if (TempData["AuthenticationState"] == "AuthenticationFailure") {
+        <div class="alert alert-danger" role="alert">
+            Login or password incorrect
+        </div>
+    }
+
+    <button type="submit" class="btn btn-primary ml-auto">Submit</button>
+
+</form>

@@ -30,6 +30,7 @@ namespace dotMovies
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
             services.AddRazorPages();
             services.AddHealthChecks();
             services.AddTransient<MoviesService>();
@@ -68,9 +69,23 @@ namespace dotMovies
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
-              
-            });
+                //endpoints.MapRazorPages();
+
+                // /...
+                endpoints.MapControllerRoute(
+                   name: "default",
+                   pattern: "{action}/{id?}",
+                   defaults: new { controller = "Home", action = "Index" }
+                   );
+                
+                // user/...
+                endpoints.MapControllerRoute(
+                    name: "user",
+                    pattern: "{controller}/{action}",
+                    defaults: new { controller = "User", action = "Register" }
+                    );
+                
+             });
         }
     }
 }
