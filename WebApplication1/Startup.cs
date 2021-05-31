@@ -73,7 +73,7 @@ namespace dotMovies
 
                 // /...
                 endpoints.MapControllerRoute(
-                   name: "default",
+                   name: "home",
                    pattern: "{action}/{id?}",
                    defaults: new { controller = "Home", action = "Index" }
                    );
