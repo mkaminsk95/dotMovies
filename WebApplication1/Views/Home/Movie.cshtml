@@ -1,0 +1,44 @@
+﻿@using dotMovies.Models;
+@using System.Globalization;
+
+@{
+    ViewData["Title"] = "Movie";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    Movie movie = @ViewBag.Movie;
+
+    string budget, revenue;
+
+    if (movie.Budget != 0)
+        budget = movie.Budget.ToString("C", CultureInfo.CreateSpecificCulture("en-US"));
+    else
+        budget = "unknown";
+
+    if (movie.Revenue != 0)
+        revenue = movie.Revenue.ToString("C", CultureInfo.CreateSpecificCulture("en-US"));
+    else
+        revenue = "unknown";
+}
+
+<h1>Movie</h1>
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="~/css/movie.css" asp-append-version="true" />
+
+<div id="movieSection">
+
+    <img src="https://image.tmdb.org/t/p/w200/@movie.Poster" class="img-fluid" id="poster" alt="Alternate Text" />
+
+    <div id="movieData">
+        <h1>
+            @movie.Title <span class="material-icons" id="star">&#xf0ec;</span> @movie.AverageScore
+        </h1>
+        <p>@foreach (var genre in movie.Genres) {<span class="genre"> @genre.Genre </span>}</p>
+        <p><span class="movieValue">@movie.Year</span></p>
+        <p><span class="movieVariable">runtime:</span>    <span class="movieValue">@movie.Runtime</span></p>
+        <p><span class="movieVariable">director:</span>   <span class="movieValue">@movie.Director</span></p>
+        <p><span class="movieVariable">screenplay:</span> <span class="movieValue">@movie.Screenplay</span></p>
+        <p><span class="movieVariable">budget:</span>     <span class="movieValue">@budget</span></p>
+        <p><span class="movieVariable">revenue:</span>    <span class="movieValue">@revenue</span></p>
+    </div>
+
+</div>

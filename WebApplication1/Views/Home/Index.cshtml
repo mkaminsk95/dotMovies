@@ -1,0 +1,48 @@
+﻿@using dotMovies.Models;
+@using System.Collections.Generic;
+@using System.ComponentModel.DataAnnotations;
+
+@{
+    ViewData["Title"] = "Home Page";
+    List<Movie> moviesList = ViewBag.MoviesList;
+    IEnumerable<string> genres = new string[]{ "Action", "Adventure", "Drama", "Science Fiction", "Comedy", "Romance", "Animation", "Family", "Fantasy",
+                                                            "Crime", "Thriller", "Horror", "History", "Mystery", "War", "Music", "Documentary", "Western", "TV Movie"};
+
+    Movie movieQuery = new Movie();
+}
+
+<link rel="stylesheet" href="~/css/moviesList.css" asp-append-version="true" />
+
+<form class="form-inline" method="post">
+
+    <input type="text" name="title" class="form-control mb-2 mr-sm-2" id="inputTitle" placeholder="title">
+   
+
+    <input type="number" name="year" min="1900" max="2099" step="1" 
+           class="form-control mb-2 mr-sm-2" id="inputYear" placeholder="year" />
+
+    <select name="genre" class="custom-select mb-2 mr-sm-2">
+        <option disabled selected> genre </option>
+        @foreach (var genre in genres) {
+            <option value="@genre">@genre</option>
+        }
+    </select>
+
+    <button type="submit" class="btn btn-primary mb-2">Search</button>
+</form>
+
+<div class="list-group">
+    @foreach (var movie in moviesList) {
+        <div class="list-group-item">
+            <img src="https://image.tmdb.org/t/p/w200/@movie.Poster" class="img-fluid" alt="Alternate Text" />
+            <div class="movieData">
+                <a class="title" href="/movie/@movie.ID">@movie.Title</a>
+                <p class="year">@movie.Year</p>
+            </div>
+            <div class="movieScore">
+                <span class="material-icons" id="star">&#xf0ec;</span>
+                @movie.AverageScore
+            </div>
+        </div>
+    }
+</div>

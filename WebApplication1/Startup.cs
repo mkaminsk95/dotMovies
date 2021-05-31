@@ -12,6 +12,9 @@ using dotMovies.Services;
 using System.Text.Json;
 using dotMovies.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using dotMovies.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace dotMovies
 {
@@ -27,9 +30,18 @@ namespace dotMovies
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
             services.AddRazorPages();
             services.AddHealthChecks();
-            services.AddTransient<MovieDBService>();
+            services.AddTransient<MoviesService>();
+            services.AddTransient<UsersService>();
+
+            services.AddDbContext<MoviesDBContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("MoviesDBContext")));
+            services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                    .AddCookie();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,33 +59,33 @@ namespace dotMovies
             }
 
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
-                //endpoints.MapGet("/movies", (context) => 
-                //{
-                //    var movies = app.ApplicationServices.GetService<JsonFileMovieService>().GetProducts();
-                //    var json = JsonSerializer.Serialize<IEnumerable<Movie>>(movies);
-                //
-                //    return context.Response.WriteAsync(json);
-                //});
-                //endpoints.MapGet("/movie/{id:int}", (context) =>
-                //{
-                //    var name = context.Request.RouteValues["name"];
+                //endpoints.MapRazorPages();
 
-                //    var endpoint = context.GetEndpoint();
-                    
-                //    return context.Response.WriteAsync($"Hello {name}!");
-                    
-                //});
-
-            });
+                // /...
+                endpoints.MapControllerRoute(
+                   name: "home",
+                   pattern: "{action}/{id?}",
+                   defaults: new { controller = "Home", action = "Index" }
+                   );
+                
+                // user/...
+                endpoints.MapControllerRoute(
+                    name: "user",
+                    pattern: "{controller}/{action}",
+                    defaults: new { controller = "User", action = "Register" }
+                    );
+                
+             });
         }
     }
 }
