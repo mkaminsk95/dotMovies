@@ -57,7 +57,7 @@ namespace dotMovies.Controllers.API
                 await _moviesService.PutMovieAsync(movie);
             
             } catch (DbUpdateConcurrencyException) {
-                if (!MovieExists(id)) {
+                if (!_moviesService.MovieExists(id)) {
                     return NotFound();
                 } else {
                     throw;
@@ -67,19 +67,26 @@ namespace dotMovies.Controllers.API
             return NoContent();
         }
 
-       
         // POST: api/Movies
         [HttpPost]
         public async Task<ActionResult<string>> PostMovie(Movie newMovie)
         {
 
-           await Task.Run( () => _moviesService.AddMovie(newMovie));
-           return new ActionResult<string>("Model Valid");
+           await _moviesService.AddMovieAsync(newMovie);
+
+           return NoContent();
         }
 
-        private bool MovieExists(int id)
-        {
-            return _context.Movies.Any(e => e.ID == id);
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteMovie(int id) {
+
+            if (!_moviesService.MovieExists(id)) 
+                return NotFound();
+
+            await _moviesService.DeleteMovieAsync(id);
+            
+            return NoContent();
         }
+
     }
 }

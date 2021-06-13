@@ -28,6 +28,12 @@ namespace dotMovies.Services {
             _context.SaveChanges();
         }
 
+        public async Task AddMovieAsync(Movie movie) {
+
+            _context.Movies.Add(movie);
+            await _context.SaveChangesAsync();
+        }
+
         public Movie GetMovie(int movieId) {
 
             return _context.Movies.Find(movieId);
@@ -76,9 +82,21 @@ namespace dotMovies.Services {
             return movies;
         }
 
+        public bool MovieExists(int movieId) {
+            return _context.Movies.Any(e => e.ID == movieId);
+        }
+
         public async Task PutMovieAsync(Movie movie) {
 
             _context.Entry(movie).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteMovieAsync(int movieId) {
+
+            Movie movie = new Movie() { ID = movieId };
+            _context.Movies.Attach(movie);
+            _context.Movies.Remove(movie);
             await _context.SaveChangesAsync();
         }
     }
