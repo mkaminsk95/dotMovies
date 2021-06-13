@@ -43,9 +43,14 @@ namespace dotMovies.Services {
             return _context.Movies.OrderByDescending(u => u.AverageScore).Take(100).ToList();
         }
 
-        public async Task<List<Movie>> GetAllMovies() {
+        public List<Movie> GetAllMovies() {
 
             return _context.Movies.ToList();
+        }
+
+        public async Task<List<Movie>> GetAllMoviesAsync() {
+
+            return await Task.Run( () => _context.Movies.ToList() );
         }
 
         public Movie GetMovieWithGenres(int movieId) {

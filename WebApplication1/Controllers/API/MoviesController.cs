@@ -30,7 +30,7 @@ namespace dotMovies.Controllers.API
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Movie>>> GetMovies() {
             
-            return await _moviesService.GetAllMovies();
+            return await _moviesService.GetAllMoviesAsync();
         }
 
         // GET: api/Movies/5
