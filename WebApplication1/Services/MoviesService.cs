@@ -22,9 +22,10 @@ namespace dotMovies.Services {
 
         public IWebHostEnvironment WebHostEnvironment { get; }
 
-        public List<Movie> GetTop100Movies() {
-            
-            return _context.Movies.OrderByDescending(u => u.AverageScore).Take(100).ToList();
+        public void AddMovie(Movie movie) {
+
+            _context.Movies.Add(movie);
+            _context.SaveChanges();
         }
 
         public Movie GetMovie(int movieId) {
@@ -32,13 +33,21 @@ namespace dotMovies.Services {
             return _context.Movies.Find(movieId);
         }
 
-      
+        public List<Movie> GetTop100Movies() {
+            
+            return _context.Movies.OrderByDescending(u => u.AverageScore).Take(100).ToList();
+        }
+
+        public async Task<List<Movie>> GetAllMovies() {
+
+            return _context.Movies.ToList();
+        }
+
         public Movie GetMovieWithGenres(int movieId) {
 
             return _context.Movies.Include(m => m.Genres).Where(m => m.ID == movieId).First();
         }
         
-
         public List<Movie> GetSpecificMovies(string title, int? year, string genre) {
 
             IQueryable<Movie> query = _context.Movies;
@@ -57,5 +66,10 @@ namespace dotMovies.Services {
             return movies;
         }
 
+        public async Task PutMovie(Movie movie) {
+
+            _context.Entry(movie).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
     }
 }

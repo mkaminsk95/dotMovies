@@ -9,12 +9,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using dotMovies.Services;
-using System.Text.Json;
-using dotMovies.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using dotMovies.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using dotMovies.Helpers.Converters;
 
 namespace dotMovies
 {
@@ -30,9 +29,12 @@ namespace dotMovies
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc().
+                AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new TimeSpanToStringConverter()));
+
             services.AddRazorPages();
             services.AddHealthChecks();
+
             services.AddTransient<MoviesService>();
             services.AddTransient<UsersService>();
 
@@ -71,21 +73,24 @@ namespace dotMovies
             {
                 //endpoints.MapRazorPages();
 
-                // /...
-                endpoints.MapControllerRoute(
-                   name: "home",
-                   pattern: "{action}/{id?}",
-                   defaults: new { controller = "Home", action = "Index" }
-                   );
-                
-                // user/...
-                endpoints.MapControllerRoute(
-                    name: "user",
-                    pattern: "{controller}/{action}",
-                    defaults: new { controller = "User", action = "Register" }
-                    );
-                
-             });
+            // /...
+            endpoints.MapControllerRoute(
+               name: "home",
+               pattern: "{action}/{id?}",
+               defaults: new { controller = "Home", action = "Index" }
+               );
+            
+            // user/...
+            endpoints.MapControllerRoute(
+                name: "user",
+                pattern: "{controller}/{action}",
+                defaults: new { controller = "User", action = "Register" }
+                );
+
+            // api/...
+            endpoints.MapControllers();
+
+            });
         }
     }
 }

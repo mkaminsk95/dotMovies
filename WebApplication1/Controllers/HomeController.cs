@@ -20,8 +20,7 @@ namespace dotMovies.Controllers {
         [HttpGet]
         public IActionResult Index() {
 
-            List<Movie> moviesList = _movieService.GetTop100Movies();
-            ViewBag.MoviesList = moviesList;
+            ViewBag.MoviesList = _movieService.GetTop100Movies(); ;
 
             return View();
         }
