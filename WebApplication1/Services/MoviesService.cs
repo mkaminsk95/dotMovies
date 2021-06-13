@@ -33,6 +33,11 @@ namespace dotMovies.Services {
             return _context.Movies.Find(movieId);
         }
 
+        public async Task<Movie> GetMovieAsync(int movieId) {
+
+            return await _context.Movies.FindAsync(movieId);
+        }
+
         public List<Movie> GetTop100Movies() {
             
             return _context.Movies.OrderByDescending(u => u.AverageScore).Take(100).ToList();
@@ -66,7 +71,7 @@ namespace dotMovies.Services {
             return movies;
         }
 
-        public async Task PutMovie(Movie movie) {
+        public async Task PutMovieAsync(Movie movie) {
 
             _context.Entry(movie).State = EntityState.Modified;
             await _context.SaveChangesAsync();

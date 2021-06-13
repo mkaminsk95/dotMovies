@@ -36,7 +36,8 @@ namespace dotMovies.Controllers.API
         // GET: api/Movies/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Movie>> GetMovie(int id) {
-            var movie = await _context.Movies.FindAsync(id);
+
+            var movie = await _moviesService.GetMovieAsync(id);
 
             if (movie == null) {
                 return NotFound();
@@ -53,7 +54,7 @@ namespace dotMovies.Controllers.API
                 return BadRequest("Movie ID mismatch");
 
             try {
-                await _moviesService.PutMovie(movie);
+                await _moviesService.PutMovieAsync(movie);
             
             } catch (DbUpdateConcurrencyException) {
                 if (!MovieExists(id)) {
